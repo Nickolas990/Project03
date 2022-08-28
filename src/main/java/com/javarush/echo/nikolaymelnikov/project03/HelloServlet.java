@@ -2,6 +2,8 @@ package com.javarush.echo.nikolaymelnikov.project03;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Collections;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 
@@ -11,6 +13,7 @@ public class HelloServlet extends HttpServlet {
     static {
         System.setOut(new java.io.PrintStream(new java.io.FileOutputStream(java.io.FileDescriptor.out), true, java.nio.charset.StandardCharsets.UTF_8));
     }
+
     private String message;
 
     private Book book;
@@ -23,21 +26,25 @@ public class HelloServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession currentSession = request.getSession();
+        String id = request.getParameter("id");
+        if ("end".equals(id)) {
+            response.sendRedirect("/index.jsp");
+            return;
+        }
+        if (id == null) {
+            id = "start";
+        }
+
         response.setContentType("text/html; charset=UTF-8");
-        System.out.println(book.getTitle());
 
 
         // Hello
         PrintWriter out = response.getWriter();
-//        out.println("<html><body>");
-//        out.println("<h1>" + message + "</h1>");
-//        out.printf("<p>" + book.getBlockById("4")+ "</p>");
-//        out.println("<p>" + "Привет!"+ "</p>");
-//        out.println("</body></html>");
-
+        book.getBlockById(id).getNext();
+        currentSession.setAttribute("text", book.getBlockById(id).prepareForHtml());
+        currentSession.setAttribute("answers", book.getBlockById(id).showAnswers());
         currentSession.setAttribute("book", book);
-        response.sendRedirect("/index.jsp");
-
+        response.sendRedirect("/Game.jsp");
 
 
     }

@@ -26,13 +26,17 @@ public class Book implements Serializable {
         return book;
     }
 
-    public String getBlockById(String id) {
+    public Block getBlockById(String id) {
         for (Block block : blocks) {
             if (block.getId().equals(id)){
-                return block.getText().replace("\n\n", "<br>");
+                return block;
             }
         }
-        return "No such block found";
+        throw new IllegalArgumentException("No such block found");
+    }
+
+    public void showAnswersById(String id) {
+        Answer[] answers = getBlockById(id).getNext();
     }
     private static InputStream getFileFromResource(String filename) throws URISyntaxException {
         InputStream resource = Book.class.getClassLoader().getResourceAsStream(filename);
