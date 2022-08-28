@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>${book.getTitle()}</title>
+    <title>Лифт в никуда</title>
 </head>
 <body>
 <form method="get" action="hello-servlet">
