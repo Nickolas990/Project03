@@ -14,6 +14,7 @@
 <form method="get" action="hello-servlet">
     <p><b>${text}</b></p>
     <p>${answers}</p>
+
 </form>
 </body>
 </html>
