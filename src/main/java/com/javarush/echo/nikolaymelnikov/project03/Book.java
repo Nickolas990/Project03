@@ -3,6 +3,8 @@ package com.javarush.echo.nikolaymelnikov.project03;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sound.sampled.AudioFormat;
 import java.io.*;
@@ -12,16 +14,18 @@ import java.nio.charset.StandardCharsets;
 @Getter
 @Setter
 public class Book implements Serializable {
+    private static final Logger logger = LoggerFactory.getLogger("rollingFile");
     private String title;
     private Block[] blocks;
 
-    public static Book initialize() {
+    public static Book initialize(String journey) {
         ObjectMapper objectMapper = new ObjectMapper();
         Book book = null;
         try {
-            book = objectMapper.readValue(new BufferedReader(new InputStreamReader(getFileFromResource("books/LiftToNowhere.json"), StandardCharsets.UTF_8)), Book.class);
+            book = objectMapper.readValue(new BufferedReader(new InputStreamReader(getFileFromResource("books/" + journey), StandardCharsets.UTF_8)), Book.class);
         } catch (IOException | URISyntaxException e) {
-            new RuntimeException(e + "There was a problem with the *.json file. Check that it is in the settings root directory and matches the your class");
+            logger.error(e + " There was a problem with the *.json file. Check that it is in the settings root directory and matches the your class");
+            new RuntimeException(e + " There was a problem with the *.json file. Check that it is in the settings root directory and matches the your class");
         }
         return book;
     }
@@ -32,6 +36,7 @@ public class Book implements Serializable {
                 return block;
             }
         }
+
         throw new IllegalArgumentException("No such block found");
     }
 

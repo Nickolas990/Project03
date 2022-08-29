@@ -8,13 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Лифт в никуда!!!!!!</title>
+    <title>${book.getTitle()}</title>
 </head>
 <body>
 <form method="get" action="hello-servlet">
-    <p><b>${text}</b></p>
+    <p><i>${text}</i></p>
     <p>${answers}</p>
-
 </form>
 </body>
 </html>

@@ -13,7 +13,7 @@ public class Block {
     private Answer[] next;
 
     public String prepareForHtml() {
-        return text.replace("\n\n", "<br>");
+        return text.replace("\n", "<br>");
     }
 
     public String showAnswers() {
